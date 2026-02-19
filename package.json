@@ -7,7 +7,9 @@
     "start": "npx tsx src/agent/index.ts",
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "test": "echo \"Tests pending\" && exit 0"
+    "test": "echo \"Tests pending\" && exit 0",
+    "demo": "npx tsx demos/demo-runner.ts",
+    "dashboard": "npx tsx src/server.ts"
   },
   "keywords": [
     "github-copilot-sdk",
