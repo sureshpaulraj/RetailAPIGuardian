@@ -89,13 +89,20 @@ app.get("/api/deployments", (_req, res) => {
   res.json({ deployments: [] });
 });
 
-app.listen(PORT, () => {
-  console.log(
-    `🛡️  RetailAPIGuardian Dashboard running at http://localhost:${PORT}`
-  );
-  console.log(`   Health: http://localhost:${PORT}/health`);
-  console.log(`   Integrations: http://localhost:${PORT}/api/integrations`);
-  console.log(`   Changes: http://localhost:${PORT}/api/changes`);
-});
+// Only start listening when run directly (not imported by tests)
+const isDirectRun =
+  process.argv[1]?.endsWith("server.ts") ||
+  process.argv[1]?.endsWith("server.js");
+
+if (isDirectRun) {
+  app.listen(PORT, () => {
+    console.log(
+      `🛡️  RetailAPIGuardian Dashboard running at http://localhost:${PORT}`
+    );
+    console.log(`   Health: http://localhost:${PORT}/health`);
+    console.log(`   Integrations: http://localhost:${PORT}/api/integrations`);
+    console.log(`   Changes: http://localhost:${PORT}/api/changes`);
+  });
+}
 
 export default app;
