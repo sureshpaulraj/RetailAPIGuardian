@@ -21,9 +21,7 @@ export function loadWorkIQConfig(): WorkIQConfig {
   const recipients = process.env.WORKIQ_EMAIL_RECIPIENTS ?? "";
 
   return {
-    tenantId:
-      process.env.WORKIQ_TENANT_ID ??
-      "5d0245d3-4d99-44f5-82d3-28c83aeda726",
+    tenantId: process.env.WORKIQ_TENANT_ID ?? "",
     clientId: process.env.WORKIQ_CLIENT_ID ?? "",
     clientSecret: process.env.WORKIQ_CLIENT_SECRET ?? "",
     teamId: process.env.WORKIQ_TEAM_ID ?? "",

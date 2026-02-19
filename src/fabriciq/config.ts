@@ -18,12 +18,9 @@ export interface FabricIQConfig {
 export function loadFabricConfig(): FabricIQConfig {
   const config: FabricIQConfig = {
     workspaceId: process.env.FABRIC_WORKSPACE_ID ?? "",
-    workspaceName:
-      process.env.FABRIC_WORKSPACE_NAME ?? "democapacity4fabric",
+    workspaceName: process.env.FABRIC_WORKSPACE_NAME ?? "",
     lakehouseId: process.env.FABRIC_LAKEHOUSE_ID ?? "",
-    tenantId:
-      process.env.FABRIC_TENANT_ID ??
-      "5d0245d3-4d99-44f5-82d3-28c83aeda726",
+    tenantId: process.env.FABRIC_TENANT_ID ?? "",
     clientId: process.env.FABRIC_CLIENT_ID ?? "",
     clientSecret: process.env.FABRIC_CLIENT_SECRET ?? "",
     enabled: false,
