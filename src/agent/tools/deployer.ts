@@ -79,7 +79,7 @@ export const deployChanges = defineTool("deploy_changes", {
       };
     }
 
-    return {
+    const result: DeployResult = {
       vendor,
       environment,
       strategy,
@@ -96,5 +96,12 @@ export const deployChanges = defineTool("deploy_changes", {
         { step: "Rollback point saved", status: "completed", duration: "2s" },
       ],
     };
+
+    // Work IQ Integration: notify on deployment completion
+    // const { getNotificationService } = await import("../../workiq/index.js");
+    // const notifier = getNotificationService();
+    // await notifier.notifyDeploymentComplete(vendor, environment, result.status, deploymentId, result.steps);
+
+    return result;
   },
 });

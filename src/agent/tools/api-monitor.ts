@@ -102,6 +102,13 @@ export const monitorApiChanges = defineTool("monitor_api_changes", {
       );
     }
 
+    // Work IQ Integration: notify on high/critical changes
+    // const { getNotificationService } = await import("../../workiq/index.js");
+    // const notifier = getNotificationService();
+    // for (const change of filtered.filter(c => c.severity === "critical" || c.severity === "high")) {
+    //   await notifier.notifyChangeDetected(change.vendor, change.severity, change.summary, change.migrationDeadline, change.affectedEndpoints);
+    // }
+
     return filtered;
   },
 });

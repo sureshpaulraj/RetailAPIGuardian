@@ -67,6 +67,15 @@ export const checkApiHealth = defineTool("check_api_health", {
       return result ? [result] : [{ vendor: args.vendor, status: "down", latencyMs: 0, lastChecked: new Date().toISOString(), errorRate: 1, details: `Unknown vendor: ${args.vendor}` }];
     }
 
-    return Object.values(vendors);
+    const results = Object.values(vendors);
+
+    // Work IQ Integration: notify on degraded/down vendor health
+    // const { getNotificationService } = await import("../../workiq/index.js");
+    // const notifier = getNotificationService();
+    // for (const v of results.filter(h => h.status === "degraded" || h.status === "down")) {
+    //   await notifier.notifyHealthAlert(v.vendor, "healthy", v.status, { latencyMs: v.latencyMs, errorRate: v.errorRate });
+    // }
+
+    return results;
   },
 });

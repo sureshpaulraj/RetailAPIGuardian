@@ -7,11 +7,15 @@
  */
 
 import express from "express";
+import { createDashboardRouter } from "./fabriciq/dashboard-routes.js";
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 app.use(express.json());
+
+// Fabric IQ analytics dashboard
+app.use(createDashboardRouter());
 
 // Health endpoint for Azure Monitor / load balancer
 app.get("/health", (_req, res) => {
