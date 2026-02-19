@@ -2,6 +2,8 @@
 
 ## System Overview
 
+> 📐 **Interactive Diagram**: Open [diagrams/system-architecture.excalidraw](diagrams/system-architecture.excalidraw) in VS Code with the Excalidraw extension, or view the layout below.
+
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                         RetailAPIGuardian                               │
@@ -74,11 +76,19 @@
 
 ## Data Flow
 
+> 📐 **Interactive Diagram**: Open [diagrams/data-flow.excalidraw](diagrams/data-flow.excalidraw) in VS Code with the Excalidraw extension, or view the layout below.
+
 ```
 Vendor API Change → Azure Functions → Event Grid → Copilot Agent
      → Impact Analysis → Code Generation → Testing → Deployment
      → Work IQ Notification → Azure Monitor Telemetry
 ```
+
+## Tool Architecture
+
+> 📐 **Interactive Diagram**: Open [diagrams/tool-architecture.excalidraw](diagrams/tool-architecture.excalidraw) in VS Code with the Excalidraw extension for the visual layout of how the CopilotClient connects to each custom tool.
+
+The Copilot SDK agent uses `CopilotClient.createSession()` to orchestrate five custom tools — `check_api_health`, `monitor_api_changes`, `generate_adapter_code`, `run_integration_tests`, and `deploy_changes` — each providing a specialized capability within the retail integration lifecycle. A system prompt injects retail domain context and enterprise standards.
 
 ## Security Architecture
 
