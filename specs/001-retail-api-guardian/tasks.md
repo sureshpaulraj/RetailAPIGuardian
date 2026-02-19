@@ -13,12 +13,12 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create project structure per implementation plan (`src/agent/tools/`, `src/agent/prompts/`, `src/integrations/stripe/`, `src/integrations/shippo/`, `src/integrations/loyalty-api/`, `src/monitor/`, `docs/`, `presentations/`, `customer/`, `.github/workflows/`)
-- [ ] T002 Initialize TypeScript project with `@github/copilot-sdk`, `express`, `tsx`, `typescript` dependencies in `package.json`
-- [ ] T003 [P] Configure `tsconfig.json` with strict mode, ES2022 target, NodeNext module resolution
-- [ ] T004 [P] Create `.gitignore` with Node.js patterns (node_modules, dist, .env, *.log)
-- [ ] T005 [P] Create `AGENTS.md` with RetailAPIGuardian custom instructions per constitution and challenge requirements
-- [ ] T006 [P] Create `mcp.json` with GitHub MCP server configuration
+- [X] T001 Create project structure per implementation plan (`src/agent/tools/`, `src/agent/prompts/`, `src/integrations/stripe/`, `src/integrations/shippo/`, `src/integrations/loyalty-api/`, `src/monitor/`, `docs/`, `presentations/`, `customer/`, `.github/workflows/`)
+- [X] T002 Initialize TypeScript project with `@github/copilot-sdk`, `express`, `tsx`, `typescript` dependencies in `package.json`
+- [X] T003 [P] Configure `tsconfig.json` with strict mode, ES2022 target, NodeNext module resolution
+- [X] T004 [P] Create `.gitignore` with Node.js patterns (node_modules, dist, .env, *.log)
+- [X] T005 [P] Create `AGENTS.md` with RetailAPIGuardian custom instructions per constitution and challenge requirements
+- [X] T006 [P] Create `mcp.json` with GitHub MCP server configuration
 
 ---
 
@@ -28,13 +28,13 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T007 Create system prompt in `src/agent/prompts/system.ts` with retail integration context, enterprise standards, risk levels, and RAI guidelines per constitution principles I–VII
-- [ ] T008 Create main agent entry point in `src/agent/index.ts` that initializes CopilotClient, creates session with streaming, registers all tools, and provides interactive CLI with shortcut commands (health, changes, fix, test, deploy)
-- [ ] T009 [P] Create CI/CD pipeline in `.github/workflows/ci.yml` with lint, typecheck, test, deploy-staging, deploy-production jobs
-- [ ] T010 [P] Create root `README.md` with project overview, quick start, links to docs
-- [ ] T011 [P] Create `docs/README.md` with problem→solution narrative, prerequisites, setup instructions, deployment guide
-- [ ] T012 [P] Create `docs/architecture.md` with system architecture diagram showing all Azure components and data flow
-- [ ] T013 [P] Create `docs/rai-notes.md` with Responsible AI considerations: human-in-the-loop, transparency, security, reliability, fairness, accountability
+- [X] T007 Create system prompt in `src/agent/prompts/system.ts` with retail integration context, enterprise standards, risk levels, and RAI guidelines per constitution principles I–VII
+- [X] T008 Create main agent entry point in `src/agent/index.ts` that initializes CopilotClient, creates session with streaming, registers all tools, and provides interactive CLI with shortcut commands (health, changes, fix, test, deploy)
+- [X] T009 [P] Create CI/CD pipeline in `.github/workflows/ci.yml` with lint, typecheck, test, deploy-staging, deploy-production jobs
+- [X] T010 [P] Create root `README.md` with project overview, quick start, links to docs
+- [X] T011 [P] Create `docs/README.md` with problem→solution narrative, prerequisites, setup instructions, deployment guide
+- [X] T012 [P] Create `docs/architecture.md` with system architecture diagram showing all Azure components and data flow
+- [X] T013 [P] Create `docs/rai-notes.md` with Responsible AI considerations: human-in-the-loop, transparency, security, reliability, fairness, accountability
 
 **Checkpoint**: Foundation ready — user story implementation can now begin
 
@@ -48,10 +48,10 @@
 
 ### Implementation for User Story 1
 
-- [ ] T014 [US1] Implement `check_api_health` tool in `src/agent/tools/health-checker.ts` using `defineTool()` with parameters (optional vendor name), return type (VendorHealthStatus[]), and simulated health data for Stripe, Shippo, LoyaltyAPI
-- [ ] T015 [US1] Register `checkApiHealth` tool in `src/agent/index.ts` session tools array
-- [ ] T016 [US1] Verify agent responds to "health" with structured health summary including status, latency, error rate per vendor
-- [ ] T017 [US1] Verify agent handles single-vendor health check (e.g., "check stripe health")
+- [X] T014 [US1] Implement `check_api_health` tool in `src/agent/tools/health-checker.ts` using `defineTool()` with parameters (optional vendor name), return type (VendorHealthStatus[]), and simulated health data for Stripe, Shippo, LoyaltyAPI
+- [X] T015 [US1] Register `checkApiHealth` tool in `src/agent/index.ts` session tools array
+- [X] T016 [US1] Verify agent responds to "health" with structured health summary including status, latency, error rate per vendor
+- [X] T017 [US1] Verify agent handles single-vendor health check (e.g., "check stripe health")
 
 **Checkpoint**: User Story 1 fully functional — agent reports vendor integration health via single command
 
@@ -65,10 +65,10 @@
 
 ### Implementation for User Story 2
 
-- [ ] T018 [US2] Implement `monitor_api_changes` tool in `src/agent/tools/api-monitor.ts` using `defineTool()` with parameters (optional vendor, optional severity filter), return type (ApiChange[]), and simulated change data: Stripe breaking change (source→payment_method), Shippo deprecation (v1→v2 rates), LoyaltyAPI security (OAuth2 migration), Stripe new feature
-- [ ] T019 [US2] Register `monitorApiChanges` tool in `src/agent/index.ts` session tools array
-- [ ] T020 [US2] Verify agent responds to "changes" with severity-sorted change list
-- [ ] T021 [US2] Verify agent handles vendor-filtered changes (e.g., "show stripe changes")
+- [X] T018 [US2] Implement `monitor_api_changes` tool in `src/agent/tools/api-monitor.ts` using `defineTool()` with parameters (optional vendor, optional severity filter), return type (ApiChange[]), and simulated change data: Stripe breaking change (source→payment_method), Shippo deprecation (v1→v2 rates), LoyaltyAPI security (OAuth2 migration), Stripe new feature
+- [X] T019 [US2] Register `monitorApiChanges` tool in `src/agent/index.ts` session tools array
+- [X] T020 [US2] Verify agent responds to "changes" with severity-sorted change list
+- [X] T021 [US2] Verify agent handles vendor-filtered changes (e.g., "show stripe changes")
 
 **Checkpoint**: User Stories 1 AND 2 both work independently
 
@@ -82,12 +82,12 @@
 
 ### Implementation for User Story 3
 
-- [ ] T022 [P] [US3] Create Stripe payment adapter in `src/integrations/stripe/adapter.ts` with PaymentRequest/PaymentResult types, createPayment function using payment_method, retry with exponential backoff
-- [ ] T023 [P] [US3] Create Shippo shipping adapter in `src/integrations/shippo/adapter.ts` with ShippingRateRequest/ShippingRate types, getRates function using v2 endpoint
-- [ ] T024 [P] [US3] Create LoyaltyAPI adapter in `src/integrations/loyalty-api/adapter.ts` with LoyaltyMember/RewardRedemption types, OAuth2 token management, getMember and redeemReward functions
-- [ ] T025 [US3] Implement `generate_adapter_code` tool in `src/agent/tools/code-generator.ts` using `defineTool()` with parameters (vendor, changeDescription, currentAdapterPath), return type (GeneratedCode with code, changesSummary, testSuggestions), and template-based generation for Stripe and Shippo
-- [ ] T026 [US3] Register `generateAdapterCode` tool in `src/agent/index.ts` session tools array
-- [ ] T027 [US3] Verify agent generates valid TypeScript adapter code when asked to "fix" detected changes
+- [X] T022 [P] [US3] Create Stripe payment adapter in `src/integrations/stripe/adapter.ts` with PaymentRequest/PaymentResult types, createPayment function using payment_method, retry with exponential backoff
+- [X] T023 [P] [US3] Create Shippo shipping adapter in `src/integrations/shippo/adapter.ts` with ShippingRateRequest/ShippingRate types, getRates function using v2 endpoint
+- [X] T024 [P] [US3] Create LoyaltyAPI adapter in `src/integrations/loyalty-api/adapter.ts` with LoyaltyMember/RewardRedemption types, OAuth2 token management, getMember and redeemReward functions
+- [X] T025 [US3] Implement `generate_adapter_code` tool in `src/agent/tools/code-generator.ts` using `defineTool()` with parameters (vendor, changeDescription, currentAdapterPath), return type (GeneratedCode with code, changesSummary, testSuggestions), and template-based generation for Stripe and Shippo
+- [X] T026 [US3] Register `generateAdapterCode` tool in `src/agent/index.ts` session tools array
+- [X] T027 [US3] Verify agent generates valid TypeScript adapter code when asked to "fix" detected changes
 
 **Checkpoint**: User Stories 1, 2, AND 3 all work independently
 
@@ -101,9 +101,9 @@
 
 ### Implementation for User Story 4
 
-- [ ] T028 [US4] Implement `run_integration_tests` tool in `src/agent/tools/test-runner.ts` using `defineTool()` with parameters (vendor, testType, optional adapterPath), return type (TestResult with passed/failed/skipped counts, test case details), and simulated results for stripe-unit (12 pass), stripe-integration (5 pass), shippo-unit (7 pass, 1 fail)
-- [ ] T029 [US4] Register `runIntegrationTests` tool in `src/agent/index.ts` session tools array
-- [ ] T030 [US4] Verify agent reports test results with pass/fail counts, durations, and error details for failed tests
+- [X] T028 [US4] Implement `run_integration_tests` tool in `src/agent/tools/test-runner.ts` using `defineTool()` with parameters (vendor, testType, optional adapterPath), return type (TestResult with passed/failed/skipped counts, test case details), and simulated results for stripe-unit (12 pass), stripe-integration (5 pass), shippo-unit (7 pass, 1 fail)
+- [X] T029 [US4] Register `runIntegrationTests` tool in `src/agent/index.ts` session tools array
+- [X] T030 [US4] Verify agent reports test results with pass/fail counts, durations, and error details for failed tests
 
 **Checkpoint**: User Stories 1–4 all work independently
 
@@ -117,10 +117,10 @@
 
 ### Implementation for User Story 5
 
-- [ ] T031 [US5] Implement `deploy_changes` tool in `src/agent/tools/deployer.ts` using `defineTool()` with parameters (vendor, branch, environment, strategy), return type (DeployResult with steps, status, deploymentId, rollbackId), production requiring approval, staging succeeding automatically
-- [ ] T032 [US5] Register `deployChanges` tool in `src/agent/index.ts` session tools array
-- [ ] T033 [US5] Verify agent returns "pending-approval" for production non-canary deployments
-- [ ] T034 [US5] Verify agent returns "success" for staging deployments with step-by-step status
+- [X] T031 [US5] Implement `deploy_changes` tool in `src/agent/tools/deployer.ts` using `defineTool()` with parameters (vendor, branch, environment, strategy), return type (DeployResult with steps, status, deploymentId, rollbackId), production requiring approval, staging succeeding automatically
+- [X] T032 [US5] Register `deployChanges` tool in `src/agent/index.ts` session tools array
+- [X] T033 [US5] Verify agent returns "pending-approval" for production non-canary deployments
+- [X] T034 [US5] Verify agent returns "success" for staging deployments with step-by-step status
 
 **Checkpoint**: All 5 user stories are independently functional
 
@@ -130,14 +130,14 @@
 
 **Purpose**: Improvements that affect multiple user stories and challenge submission completeness
 
-- [ ] T035 [P] Create API change monitoring scaffold in `src/monitor/changelog-watcher.ts` with Azure Functions timer-trigger pattern
-- [ ] T036 [P] Update `docs/README.md` with complete deployment instructions for Azure (Functions, API Management, Cosmos DB, Monitor)
-- [ ] T037 [P] Verify `AGENTS.md` covers all 5 tools and retail domain context per challenge requirements
-- [ ] T038 [P] Verify `mcp.json` has GitHub MCP server configuration
-- [ ] T039 [P] Verify `.github/workflows/ci.yml` has lint → test → deploy-staging → deploy-production pipeline
-- [ ] T040 Verify TypeScript strict mode compilation passes (`npx tsc --noEmit`)
-- [ ] T041 Run quickstart.md validation — execute all 5 demo commands and verify expected outputs
-- [ ] T042 [P] Create placeholder for presentation deck at `presentations/RetailAPIGuardian.pptx`
+- [X] T035 [P] Create API change monitoring scaffold in `src/monitor/changelog-watcher.ts` with Azure Functions timer-trigger pattern
+- [X] T036 [P] Update `docs/README.md` with complete deployment instructions for Azure (Functions, API Management, Cosmos DB, Monitor)
+- [X] T037 [P] Verify `AGENTS.md` covers all 5 tools and retail domain context per challenge requirements
+- [X] T038 [P] Verify `mcp.json` has GitHub MCP server configuration
+- [X] T039 [P] Verify `.github/workflows/ci.yml` has lint → test → deploy-staging → deploy-production pipeline
+- [X] T040 Verify TypeScript strict mode compilation passes (`npx tsc --noEmit`)
+- [X] T041 Run quickstart.md validation — execute all 5 demo commands and verify expected outputs
+- [X] T042 [P] Create placeholder for presentation deck at `presentations/RetailAPIGuardian.pptx`
 
 ---
 
