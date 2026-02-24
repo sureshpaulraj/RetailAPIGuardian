@@ -1,0 +1,223 @@
+openapi: 3.0.3
+info:
+  title: RetailAPIGuardian API
+  version: 1.0.0
+  description: API surface for health checks, change detection, code generation, testing, and deployments.
+servers:
+  - url: https://api.retailapiguardian.example.com
+security:
+  - bearerAuth: []
+paths:
+  /health:
+    get:
+      summary: Get health for all vendors
+      parameters:
+        - in: query
+          name: vendor
+          schema:
+            type: string
+          required: false
+          description: Filter to a specific vendor name
+      responses:
+        "200":
+          description: Health results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthSummary"
+  /changes:
+    get:
+      summary: List API changes
+      parameters:
+        - in: query
+          name: vendor
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: severity
+          schema:
+            type: string
+            enum: [low, medium, high, critical]
+          required: false
+      responses:
+        "200":
+          description: Change list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiChangeList"
+  /adapters/generate:
+    post:
+      summary: Generate adapter updates for a detected change
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdapterGenerationRequest"
+      responses:
+        "200":
+          description: Adapter generation result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdapterGenerationResult"
+  /tests/run:
+    post:
+      summary: Run integration tests for a vendor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestRunRequest"
+      responses:
+        "200":
+          description: Test results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TestRunResult"
+  /deployments:
+    post:
+      summary: Deploy validated adapter changes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeploymentRequest"
+      responses:
+        "200":
+          description: Deployment status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeploymentResult"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    HealthSummary:
+      type: object
+      properties:
+        generatedAt:
+          type: string
+          format: date-time
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/HealthCheckResult"
+    HealthCheckResult:
+      type: object
+      properties:
+        vendor:
+          type: string
+        status:
+          type: string
+          enum: [healthy, degraded, down]
+        latencyMs:
+          type: number
+        errorRate:
+          type: number
+        checkedAt:
+          type: string
+          format: date-time
+    ApiChangeList:
+      type: object
+      properties:
+        changes:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApiChange"
+    ApiChange:
+      type: object
+      properties:
+        vendor:
+          type: string
+        changeType:
+          type: string
+          enum: [breaking, deprecation, security, feature]
+        severity:
+          type: string
+          enum: [low, medium, high, critical]
+        affectedEndpoints:
+          type: array
+          items:
+            type: string
+        effectiveDate:
+          type: string
+          format: date
+        migrationDeadline:
+          type: string
+          format: date
+    AdapterGenerationRequest:
+      type: object
+      required: [vendor, changeId]
+      properties:
+        vendor:
+          type: string
+        changeId:
+          type: string
+    AdapterGenerationResult:
+      type: object
+      properties:
+        vendor:
+          type: string
+        updatedFiles:
+          type: array
+          items:
+            type: string
+        summary:
+          type: string
+    TestRunRequest:
+      type: object
+      required: [vendor]
+      properties:
+        vendor:
+          type: string
+    TestRunResult:
+      type: object
+      properties:
+        vendor:
+          type: string
+        passed:
+          type: integer
+        failed:
+          type: integer
+        durationMs:
+          type: integer
+        failures:
+          type: array
+          items:
+            type: string
+    DeploymentRequest:
+      type: object
+      required: [vendor, environment, strategy]
+      properties:
+        vendor:
+          type: string
+        environment:
+          type: string
+          enum: [dev, staging, prod]
+        strategy:
+          type: string
+          enum: [canary, blueGreen, rolling]
+    DeploymentResult:
+      type: object
+      properties:
+        vendor:
+          type: string
+        environment:
+          type: string
+        status:
+          type: string
+          enum: [pending_approval, in_progress, succeeded, failed, rolled_back]
+        deploymentId:
+          type: string
+        rollbackId:
+          type: string

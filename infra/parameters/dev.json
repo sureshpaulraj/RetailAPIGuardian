@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environment": { "value": "dev" },
+    "namePrefix": { "value": "rag-dev" },
+    "location": { "value": "eastus" },
+    "postgresAdminLogin": { "value": "ragadmin" },
+    "postgresAdminPassword": { "value": "<REPLACE-WITH-SECRET>" },
+    "postgresSkuName": { "value": "Standard_D2s_v3" },
+    "postgresSkuTier": { "value": "GeneralPurpose" },
+    "postgresStorageSizeGb": { "value": 128 },
+    "redisSkuName": { "value": "Standard" },
+    "redisSkuFamily": { "value": "C" },
+    "redisSkuCapacity": { "value": 1 },
+    "appServicePlanSkuName": { "value": "P1v3" },
+    "appServicePlanSkuTier": { "value": "PremiumV3" },
+    "appServicePlanCapacity": { "value": 1 },
+    "appGatewayCapacity": { "value": 1 }
+  }
+}

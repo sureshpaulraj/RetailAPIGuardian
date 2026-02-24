@@ -11,7 +11,9 @@
     "test:api": "npx playwright test --project=api",
     "test:dashboard": "npx playwright test --project=dashboard",
     "demo": "npx tsx demos/demo-runner.ts",
-    "dashboard": "npx tsx src/server.ts"
+    "dashboard": "npx tsx src/server.ts",
+    "dashboard:ui": "npm --prefix frontend run dev",
+    "dashboard:build": "npm --prefix frontend run build"
   },
   "keywords": [
     "github-copilot-sdk",

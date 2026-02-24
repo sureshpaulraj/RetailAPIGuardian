@@ -1,0 +1,223 @@
+openapi: 3.0.3
+info:
+  title: Connector Health Dashboard API
+  version: 1.0.0
+  description: API surface for listing connectors, rechecking health, and requesting breakage analysis.
+servers:
+  - url: https://api.retailapiguardian.example.com
+security:
+  - bearerAuth: []
+paths:
+  /api/connectors:
+    get:
+      summary: List connectors and current health
+      responses:
+        "200":
+          description: Connector list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConnectorList"
+  /api/connectors/recheck:
+    post:
+      summary: Request a health recheck for all or selected connectors
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecheckRequest"
+      responses:
+        "202":
+          description: Recheck queued
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecheckStatus"
+  /api/connectors/recheck/{requestId}:
+    get:
+      summary: Get recheck request status
+      parameters:
+        - in: path
+          name: requestId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Recheck status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecheckStatus"
+  /api/connectors/{connectorId}/history:
+    get:
+      summary: Get health check history for a connector
+      parameters:
+        - in: path
+          name: connectorId
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: limit
+          required: false
+          schema:
+            type: integer
+            default: 50
+      responses:
+        "200":
+          description: Health check history
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthHistory"
+  /api/connectors/{connectorId}/analysis:
+    post:
+      summary: Request breakage analysis for a connector
+      parameters:
+        - in: path
+          name: connectorId
+          required: true
+          schema:
+            type: string
+      responses:
+        "202":
+          description: Analysis queued
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangeAnalysisResult"
+    get:
+      summary: Get latest breakage analysis for a connector
+      parameters:
+        - in: path
+          name: connectorId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Latest analysis
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangeAnalysisResult"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    ConnectorList:
+      type: object
+      properties:
+        generatedAt:
+          type: string
+          format: date-time
+        connectors:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConnectorStatus"
+    ConnectorStatus:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum: [good, slow, broken]
+        lastCheckedAt:
+          type: string
+          format: date-time
+    RecheckRequest:
+      type: object
+      required: [scope]
+      properties:
+        scope:
+          type: string
+          enum: [all, selected]
+        connectorIds:
+          type: array
+          items:
+            type: string
+    RecheckStatus:
+      type: object
+      properties:
+        requestId:
+          type: string
+        status:
+          type: string
+          enum: [queued, running, completed, failed]
+        submittedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConnectorStatus"
+    HealthHistory:
+      type: object
+      properties:
+        connectorId:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/HealthCheckResult"
+    HealthCheckResult:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum: [good, slow, broken]
+        latencyMs:
+          type: number
+        errorRate:
+          type: number
+        checkedAt:
+          type: string
+          format: date-time
+        details:
+          type: string
+    ChangeAnalysisResult:
+      type: object
+      properties:
+        connectorId:
+          type: string
+        status:
+          type: string
+          enum: [queued, running, completed, failed]
+        summary:
+          type: string
+        rationale:
+          type: string
+        riskLevel:
+          type: string
+          enum: [Low, Medium, High, Critical]
+        recommendations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Recommendation"
+        completedAt:
+          type: string
+          format: date-time
+          nullable: true
+    Recommendation:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        confidence:
+          type: number

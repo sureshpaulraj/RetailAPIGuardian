@@ -16,9 +16,30 @@ npm install
 # Run the agent
 npx tsx src/agent/index.ts
 
-# Run the dashboard server
-npx tsx src/server.ts
+# Run the dashboard API
+npm run dashboard
+
+# Run the dashboard UI (Vite)
+npm run dashboard:ui
 ```
+
+## ☁️ Azure Deployment
+
+This repo includes Bicep templates in [infra/README.md](infra/README.md).
+
+```bash
+az login
+az account set --subscription <subscription-id>
+
+az group create --name <rg-name> --location <region>
+
+az deployment group create \
+	--resource-group <rg-name> \
+	--template-file infra/main.bicep \
+	--parameters infra/parameters/dev.json
+```
+
+Replace the `<REPLACE-WITH-SECRET>` values in parameter files before deploying.
 
 ## 📖 Documentation
 
