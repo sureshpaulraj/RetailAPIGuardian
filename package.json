@@ -11,7 +11,9 @@
     "test:api": "npx playwright test --project=api",
     "test:dashboard": "npx playwright test --project=dashboard",
     "demo": "npx tsx demos/demo-runner.ts",
-    "dashboard": "npx tsx src/server.ts"
+    "dashboard": "npx tsx src/server.ts",
+    "dashboard:ui": "npm --prefix frontend run dev",
+    "dashboard:build": "npm --prefix frontend run build"
   },
   "keywords": [
     "github-copilot-sdk",
@@ -27,8 +29,10 @@
     "@types/express": "^5.0.6",
     "@types/node": "^25.3.0",
     "express": "^5.2.1",
+    "swagger-ui-express": "^5.0.1",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "yaml": "^2.8.2"
   },
   "devDependencies": {
     "@azure/core-auth": "^1.10.1",
@@ -38,6 +42,7 @@
     "@azure/keyvault-secrets": "^4.10.0",
     "@azure/monitor-query": "^1.3.3",
     "@playwright/test": "^1.58.2",
+    "@types/swagger-ui-express": "^4.1.8",
     "pptxgenjs": "^4.0.1"
   }
 }
