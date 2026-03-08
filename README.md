@@ -29,6 +29,25 @@ RetailAPIGuardian acts as an always-on **integration reliability platform** powe
 
 ---
 
+## Screenshots
+
+### Fabric IQ Analytics Dashboard
+Real-time analytics showing overall health score, vendor status, API change timeline, and deployment history.
+
+![Fabric IQ Dashboard](docs/screenshots/fabriciq-dashboard.png)
+
+### Connector Health Dashboard (React)
+Interactive connector management with live status monitoring, latency tracking, and investigation tools.
+
+![Connector Health Dashboard](docs/screenshots/connector-dashboard.png)
+
+### OpenAPI Documentation (Swagger UI)
+Interactive API explorer with full endpoint coverage, request/response schemas, and try-it-out functionality.
+
+![Swagger UI](docs/screenshots/swagger-ui.png)
+
+---
+
 ## Quick Start
 
 ### Prerequisites
