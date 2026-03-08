@@ -1,15 +1,77 @@
 openapi: 3.0.3
 info:
-  title: Connector Health Dashboard API
+  title: RetailAPIGuardian API
   version: 1.0.0
-  description: API surface for listing connectors, rechecking health, and requesting breakage analysis.
+  description: |
+    Full API surface for the RetailAPIGuardian platform.
+    Includes connector health monitoring, vendor integration status,
+    API change tracking, deployment history, and Fabric IQ analytics.
 servers:
+  - url: http://localhost:3001
+    description: Local development
   - url: https://api.retailapiguardian.example.com
-security:
-  - bearerAuth: []
+    description: Production
+tags:
+  - name: Health
+    description: Service health check
+  - name: Connectors
+    description: Connector health dashboard (list, recheck, history, analysis)
+  - name: Integrations
+    description: Vendor integration status
+  - name: Changes
+    description: Pending API changes
+  - name: Deployments
+    description: Deployment tracking
+  - name: Fabric IQ
+    description: Analytics dashboard data
 paths:
+  /health:
+    get:
+      tags: [Health]
+      summary: Service health check
+      responses:
+        "200":
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+  /api/integrations:
+    get:
+      tags: [Integrations]
+      summary: Get all vendor integration statuses
+      responses:
+        "200":
+          description: Integration list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IntegrationList"
+  /api/changes:
+    get:
+      tags: [Changes]
+      summary: Get pending API changes across vendors
+      responses:
+        "200":
+          description: Change list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangeList"
+  /api/deployments:
+    get:
+      tags: [Deployments]
+      summary: Get recent deployments
+      responses:
+        "200":
+          description: Deployment list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeploymentList"
   /api/connectors:
     get:
+      tags: [Connectors]
       summary: List connectors and current health
       responses:
         "200":
@@ -20,6 +82,7 @@ paths:
                 $ref: "#/components/schemas/ConnectorList"
   /api/connectors/recheck:
     post:
+      tags: [Connectors]
       summary: Request a health recheck for all or selected connectors
       requestBody:
         required: true
@@ -36,6 +99,7 @@ paths:
                 $ref: "#/components/schemas/RecheckStatus"
   /api/connectors/recheck/{requestId}:
     get:
+      tags: [Connectors]
       summary: Get recheck request status
       parameters:
         - in: path
@@ -52,6 +116,7 @@ paths:
                 $ref: "#/components/schemas/RecheckStatus"
   /api/connectors/{connectorId}/history:
     get:
+      tags: [Connectors]
       summary: Get health check history for a connector
       parameters:
         - in: path
@@ -74,6 +139,7 @@ paths:
                 $ref: "#/components/schemas/HealthHistory"
   /api/connectors/{connectorId}/analysis:
     post:
+      tags: [Connectors]
       summary: Request breakage analysis for a connector
       parameters:
         - in: path
@@ -89,6 +155,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ChangeAnalysisResult"
     get:
+      tags: [Connectors]
       summary: Get latest breakage analysis for a connector
       parameters:
         - in: path
@@ -103,6 +170,67 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ChangeAnalysisResult"
+  /api/dashboard/summary:
+    get:
+      tags: [Fabric IQ]
+      summary: Get computed dashboard summary with KPIs
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/dashboard/health-trends:
+    get:
+      tags: [Fabric IQ]
+      summary: Get health trend records
+      responses:
+        "200":
+          description: Array of health trend records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+  /api/dashboard/changes:
+    get:
+      tags: [Fabric IQ]
+      summary: Get change metrics
+      responses:
+        "200":
+          description: Array of change metric records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+  /api/dashboard/deployments:
+    get:
+      tags: [Fabric IQ]
+      summary: Get deployment metrics
+      responses:
+        "200":
+          description: Array of deployment metric records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+  /api/dashboard/cost-savings:
+    get:
+      tags: [Fabric IQ]
+      summary: Get cost savings data
+      responses:
+        "200":
+          description: Cost savings data
+          content:
+            application/json:
+              schema:
+                type: object
 components:
   securitySchemes:
     bearerAuth:
@@ -110,6 +238,66 @@ components:
       scheme: bearer
       bearerFormat: JWT
   schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: healthy
+        service:
+          type: string
+          example: RetailAPIGuardian
+        timestamp:
+          type: string
+          format: date-time
+        version:
+          type: string
+          example: "1.0.0"
+    IntegrationList:
+      type: object
+      properties:
+        integrations:
+          type: array
+          items:
+            type: object
+            properties:
+              vendor:
+                type: string
+              status:
+                type: string
+                enum: [healthy, degraded, down]
+              latencyMs:
+                type: number
+              errorRate:
+                type: number
+              lastChecked:
+                type: string
+                format: date-time
+    ChangeList:
+      type: object
+      properties:
+        changes:
+          type: array
+          items:
+            type: object
+            properties:
+              vendor:
+                type: string
+              severity:
+                type: string
+                enum: [low, medium, high, critical]
+              summary:
+                type: string
+              deadline:
+                type: string
+                format: date
+    DeploymentList:
+      type: object
+      properties:
+        deployments:
+          type: array
+          items:
+            type: object
     ConnectorList:
       type: object
       properties:
